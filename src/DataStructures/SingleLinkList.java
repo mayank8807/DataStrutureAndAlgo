@@ -2,9 +2,9 @@
  * @Author Mayank Jain   8th May 2019   Yokohama, Japan
  * Just a little hobby project
  * A common method to insert nodes at any location 
- * 3 Separate methods to insert node at beginning , middle and last
- * A common method to delete a node
- * 3 Separate methods to delete node at first , last and middle
+ * 2 Separate methods to insert node at beginning and last
+ * A common method to delete a node at any position
+ * 2 Separate methods to delete node at first and last
  */
 
 package DataStructures;
@@ -100,6 +100,50 @@ public class SingleLinkList
 			}
 			currentNode = currentNode.getNextNode();
 		}while(currentNode!=null);
+	}
+	
+	/*
+	 * if any valid position is given , error will be thrown instead of adjusting to border position
+	 * node will be inserted as Head if position is 0 or given list is empty
+	 */
+	public void insert(int data, int position)
+	{
+		LinkNode newNode = new LinkNode(data);
+		
+		if(position < 0 || position >length )
+		{
+			throw new IllegalArgumentException("please provide proper position");
+		}
+		
+		//if list is empty make it head node
+		if(head == null)
+		{
+			head = newNode;
+			length++;
+			return;
+		}
+		
+		//if node need to be added at beginning
+		if(position == 0)
+		{
+			insertAtBegin(data);
+			return;
+		}
+		
+		LinkNode currentNode = head;
+		LinkNode previoudNode = head;
+		int currentPos = 0;
+		
+		while(currentPos!=position)
+		{
+			previoudNode = currentNode;
+			currentNode = currentNode.getNextNode() ;
+			currentPos++;
+		}
+		
+		previoudNode.setNextNode(newNode);
+		newNode.setNextNode(currentNode);
+		return;
 	}
 	
 
