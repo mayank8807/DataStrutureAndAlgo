@@ -1,3 +1,4 @@
+package Recursion;
 //This program all possible string for given length using values between 0 , 1 ...K
 //Recursion is used to generate output.
 // base case will be string of length 1 , when we will have string for each possible value.
