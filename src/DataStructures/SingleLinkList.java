@@ -151,12 +151,12 @@ public class SingleLinkList
 	 * it will  save value of node in temporary variable  and assign node next to head node 
 	 * as new head of list
 	 */
-	public synchronized int removeFromBegin() throws Exception
+	public synchronized int removeFromBegin()
 	{
 		if(head==null)
 		{
 			System.out.println("List is empty");
-			throw new Exception("list is empty");
+			throw new RuntimeException("list is empty");
 		}
 		
 		LinkNode node = head;
@@ -169,6 +169,8 @@ public class SingleLinkList
 	
 	/*
 	 * it will check if list empty , an error will be returned
+	 * it will traverse list till end node is found
+	 * if list contains only a single node, list head will be set to null
 	 */
 	public synchronized int removeFromLast() throws Exception
 	{
@@ -186,19 +188,32 @@ public class SingleLinkList
 			{
 				if(previousNode==null) 
 				{ // list had only one element 
-					length--;
 					head = null;
-					return currentNode.getData();
+					break;
 				}
 				//List has more than one element
 				previousNode.setNextNode(null);
-				return currentNode.getData();
 			}
 			previousNode = currentNode;
 			currentNode = currentNode.getNextNode();
 		}	
+		length--;
+		return currentNode.getData();
+	}
+	
+	/*
+	 * it will delete node from specified position 
+	 * first node is at 0 indexed
+	 */
+	public synchronized  int remove(int position)
+	{
+		if( position < 1 || position > length-1 )
+		{
+			throw new IllegalArgumentException("please provide valid index");
+		}
 		
-		throw new Exception("Ideally it should not reach here");
+		//todo 
+		return -1;
 	}
 	
 
