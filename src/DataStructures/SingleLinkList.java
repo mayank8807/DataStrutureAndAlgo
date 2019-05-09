@@ -60,7 +60,7 @@ public class SingleLinkList
 	 * There is no need to check if old Head Node is null, it will be take cared automatically
 	 * increase length of list by one
 	 * */
-	public void insertAtBegin(int data)
+	public synchronized void insertAtBegin(int data)
 	{
 		//create new node with provided data
 		LinkNode newNode = new LinkNode(data);
@@ -77,7 +77,7 @@ public class SingleLinkList
 	 *  attach new node to last node
 	 *  increase list  length
 	 */
-	public void insertAtEnd(int data)
+	public synchronized void insertAtEnd(int data)
 	{
 		//create new node with provided data
 		LinkNode newNode = new LinkNode(data);
@@ -106,7 +106,7 @@ public class SingleLinkList
 	 * if any valid position is given , error will be thrown instead of adjusting to border position
 	 * node will be inserted as Head if position is 0 or given list is empty
 	 */
-	public void insert(int data, int position)
+	public synchronized void insert(int data, int position)
 	{
 		LinkNode newNode = new LinkNode(data);
 		
@@ -144,6 +144,61 @@ public class SingleLinkList
 		previoudNode.setNextNode(newNode);
 		newNode.setNextNode(currentNode);
 		return;
+	}
+	
+	/*
+	 * it will check if list empty , an error will be returned
+	 * it will  save value of node in temporary variable  and assign node next to head node 
+	 * as new head of list
+	 */
+	public synchronized int removeFromBegin() throws Exception
+	{
+		if(head==null)
+		{
+			System.out.println("List is empty");
+			throw new Exception("list is empty");
+		}
+		
+		LinkNode node = head;
+		int data  = node.getData(); // save data of current head so we can return it
+		head = head.getNextNode(); // assign next node to head as head node
+		node.setNextNode(null);
+		length--;
+		return data;
+	}
+	
+	/*
+	 * it will check if list empty , an error will be returned
+	 */
+	public synchronized int removeFromLast() throws Exception
+	{
+		if(head==null)
+		{
+			System.out.println("List is empty");
+			throw new Exception("list is empty");
+		}
+		
+		LinkNode currentNode = head; 
+		LinkNode previousNode = null;
+		while(currentNode!=null)
+		{
+			if(currentNode.getNextNode() == null) // this is the last node
+			{
+				if(previousNode==null) 
+				{ // list had only one element 
+					length--;
+					head = null;
+					return currentNode.getData();
+				}
+				//List has more than one element
+				previousNode.setNextNode(null);
+				return currentNode.getData();
+			}
+			previousNode = currentNode;
+			currentNode = currentNode.getNextNode();
+		}	
+		
+		throw new Exception("Ideally it should not reach here");
 	}
 	
 

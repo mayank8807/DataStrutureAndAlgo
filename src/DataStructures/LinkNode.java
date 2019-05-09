@@ -1,7 +1,7 @@
 /*
  * @Author Mayank Jain   8th May 2019   Yokohama, Japan
  * Just a little hobby project
- * Node that will be used in Sigle Lisnked list applications
+ * Node that will be used in Single Linked list applications
  */
 package DataStructures;
 
